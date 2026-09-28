@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جنينة الحروف | Miss: Nourhan Ali</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+:root{
+  --ink:#3a2f5e;        /* بنفسجي غامق للنصوص */
+  --teal:#2a7f7a;       /* الأخضر المزرق للأزرار */
+  --teal-dark:#1c5a56;
+  --gold:#e0a83a;       /* الذهبي للإطارات */
+  --cream:#fffaf0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;overflow:hidden;color:var(--ink)}
+.lesson{width:100vw;height:100vh;position:relative;overflow:hidden}
+
+/* ===== الانتقال بين السلايدات ===== */
+.slide{
+  position:absolute;inset:0;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:scale(.94);
+  transition:opacity .8s ease, transform .9s cubic-bezier(.22,.8,.25,1), visibility 0s linear .8s;
+}
+.slide.active{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+.slide.exit-forward{transform:scale(1.35)}   /* زووم كأننا بندخل من البوابة */
+.slide.exit-back{transform:scale(.9)}
+
+/* ===== السلايد الأول ===== */
+.welcome{background:linear-gradient(180deg,#bfe3ee 0%,#e4f3ee 55%,#fbf3dc 100%)}
+.sun{position:absolute;width:140px;height:140px;border-radius:50%;background:#ffd86b;top:6%;left:7%;box-shadow:0 0 60px 10px #ffe9a3}
+.cloud{position:absolute;background:#fff;border-radius:60px;opacity:.85}
+.cloud.c1{width:210px;height:58px;top:20%;right:8%}
+.cloud.c2{width:150px;height:45px;top:30%;left:22%}
+.hill{position:absolute;border-radius:50% 50% 0 0}
+.hill.h1{left:-10%;bottom:18%;width:60%;height:34%;background:#b5dbaa}
+.hill.h2{right:-12%;bottom:16%;width:65%;height:38%;background:#a2cf9a}
+.ground{position:absolute;bottom:-8%;left:-5%;width:110%;height:48%;background:linear-gradient(180deg,#8cc48a,#5f9e6b);border-radius:50% 50% 0 0}
+
+/* عنوان الترحيب: فوق البوابة وواضح */
+.title-banner{
+  position:absolute;top:13%;left:50%;transform:translateX(-50%);
+  z-index:6;white-space:nowrap;
+  background:linear-gradient(180deg,#fffdf6,#fff1d0);
+  border:3px solid var(--gold);border-radius:999px;
+  padding:8px 20px;
+  font-size:clamp(22px,3.2vw,46px);font-weight:800;color:var(--ink);
+  box-shadow:0 10px 30px #3a2f5e30;
+}
+.gate{position:absolute;bottom:24%;left:50%;transform:translateX(-50%);width:min(62vw,760px);height:min(40vh,370px)}
+.gate-arch{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:62%;height:78%;border:28px solid #8b5e3c;border-bottom:0;border-radius:240px 240px 0 0;background:#e6f5d9}
+.gate-door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:45%;height:67%;background:repeating-linear-gradient(90deg,#7c5b42 0 17px,#a67b55 17px 27px);border:12px solid #694a37;border-bottom:0;border-radius:140px 140px 0 0;box-shadow:inset 0 0 35px #3d2b22}
+.flower{position:absolute;font-size:48px;animation:sway 3s ease-in-out infinite}
+.f1{left:11%;bottom:22%}.f2{right:12%;bottom:23%}.f3{left:23%;bottom:15%}.f4{right:25%;bottom:16%}
+
+.bottom-box{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:14px;z-index:10;width:max-content;max-width:94vw}
+.welcome-card{background:#fffaf0f2;border:2px solid #f0dcaa;padding:12px 25px;border-radius:22px;font-size:clamp(15px,1.6vw,24px);font-weight:700;box-shadow:0 8px 30px #3a2f5e22;text-align:center}
+.start-btn{border:0;background:var(--teal);color:#fff;font-family:inherit;font-size:clamp(15px,1.5vw,22px);font-weight:800;padding:12px 30px;border-radius:999px;cursor:pointer;box-shadow:0 7px 0 var(--teal-dark);animation:glow 2.2s ease-in-out infinite;transition:background .2s}
+.start-btn:hover{background:#33918b}
+.start-btn:active{transform:translateY(4px);box-shadow:0 3px 0 var(--teal-dark)}
+
+/* الاسم تحت على الشمال */
+.author{
+  position:absolute;left:2.5%;bottom:3%;z-index:10;
+  direction:ltr;unicode-bidi:isolate;
+  background:#fffaf0f2;border:2px solid var(--gold);color:var(--ink);
+  padding:7px 18px;border-radius:999px;
+  font-weight:800;font-size:clamp(13px,1.3vw,19px);
+  box-shadow:0 6px 20px #3a2f5e22;
+}
+
+/* حركات دخول السلايد الأول */
+.slide.active .title-banner{animation:dropCenter .8s .35s cubic-bezier(.22,.8,.25,1) both}
+.slide.active .bottom-box{animation:riseCenter .8s .5s cubic-bezier(.22,.8,.25,1) both}
+.slide.active .author{animation:fadeUp .8s .7s ease both}
+
+/* ===== السلايد الثاني ===== */
+.garden{background:#2b3b34}
+/* خلفية ضبابية من نفس الصورة تملا الجوانب لو الشاشة نسبتها مختلفة */
+.bg-blur{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(24px) brightness(.85);}
+/* الصورة جوه إطار ثابت النسبة 16:9 عشان الأماكن تفضل مظبوطة على الحروف في أي شاشة */
+.stage{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh * 16 / 9));aspect-ratio:16/9;box-shadow:0 0 60px #0006}
+.stage img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.instructions{position:absolute;top:2.5%;left:50%;transform:translateX(-50%);background:#fffaf0f2;border:3px solid var(--gold);border-radius:22px;padding:9px 22px;font-size:clamp(14px,1.4vw,21px);font-weight:800;box-shadow:0 8px 25px #0003;z-index:20;white-space:nowrap}
+/* الغطاء: لوحة خشب صغيرة عليها علامة استفهام بتخبّي الحرف. لما الطفل يدوس تختفي ويظهر الحرف */
+.hotspot{position:absolute;border:0;padding:0;border-radius:38%;cursor:pointer;z-index:15;outline:none;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center;font-family:inherit;font-weight:800;color:#8a6a45;font-size:clamp(14px,2.6vw,36px);box-shadow:inset 0 0 8px #6b4a2a55;transition:opacity .5s ease,transform .2s ease}
+.hotspot:hover{transform:scale(1.06)}
+.hotspot.open{opacity:0}
+.letter-pop{position:absolute;z-index:30;display:none;min-width:100px;height:100px;padding:10px;border-radius:28px;background:#fffdf6;border:7px solid var(--gold);align-items:center;justify-content:center;font-size:68px;font-weight:900;color:var(--ink);box-shadow:0 12px 35px #0005;animation:pop .35s ease}
+.letter-pop.show{display:flex}
+.letter-pop small{position:absolute;bottom:-32px;font-size:14px;background:#fff;padding:3px 9px;border-radius:10px;white-space:nowrap;color:var(--ink)}
+.progress{position:absolute;right:2%;bottom:3%;background:#fffaf0f2;border:2px solid var(--gold);padding:9px 16px;border-radius:18px;font-weight:800;z-index:20;box-shadow:0 5px 20px #0003}
+.back{position:absolute;left:2%;bottom:3%;z-index:20;border:2px solid var(--gold);background:#fffaf0f2;color:var(--ink);font-family:inherit;font-weight:800;padding:9px 16px;border-radius:18px;cursor:pointer;transition:transform .2s}
+.back:hover{transform:translateY(-2px)}
+.confetti{position:absolute;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.confetti span{position:absolute;top:-20px;width:10px;height:18px;border-radius:3px;animation:fall 1.4s linear forwards}
+
+/* حركات دخول السلايد الثاني */
+.slide.active .instructions{animation:dropCenter .8s .4s cubic-bezier(.22,.8,.25,1) both}
+.slide.active .progress,.slide.active .back{animation:fadeUp .8s .7s ease both}
+
+/* ===== الحركات ===== */
+@keyframes pop{0%{transform:scale(.2) rotate(-10deg);opacity:0}70%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes fall{to{top:110%;transform:rotate(720deg)}}
+@keyframes sway{50%{transform:translateY(-5px) rotate(3deg)}}
+@keyframes dropCenter{from{opacity:0;transform:translate(-50%,-40px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes riseCenter{from{opacity:0;transform:translate(-50%,40px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{box-shadow:0 7px 0 var(--teal-dark),0 0 0 0 #e0a83a88}50%{box-shadow:0 7px 0 var(--teal-dark),0 0 0 14px #e0a83a00}}
+
+@media(max-width:700px){
+  .instructions{white-space:normal;width:80%;text-align:center}
+  .title-banner{white-space:normal;text-align:center;width:90%;padding:8px 18px}
+  .bottom-box{bottom:8%}
+  .author{left:50%;transform:translateX(-50%);bottom:1.5%}
+  .slide.active .author{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="lesson">
+
+<section id="slide1" class="slide active welcome">
+  <div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div>
+  <div class="hill h1"></div><div class="hill h2"></div><div class="ground"></div>
+
+  <div class="title-banner">مرحبًا بك في جنينة الحروف 🌷</div>
+
+  <div class="gate">
+    <div class="gate-arch"></div><div class="gate-door"></div>
+  </div>
+  <div class="flower f1">🌼</div><div class="flower f2">🌸</div><div class="flower f3">🌷</div><div class="flower f4">🌻</div>
+
+  <div class="bottom-box">
+    <div class="welcome-card">هل أنت مستعدّ للبحث عن الحروف؟ 🔎</div>
+    <button class="start-btn" onclick="goToGarden()">هيا ندخل الجنينة! 🌳</button>
+  </div>
+
+  <div class="author">Miss: Nourhan Ali</div>
+</section>
+
+<section id="slide2" class="slide garden">
+  <img class="bg-blur" src="garden.jpg" alt="">
+  <div class="stage">
+    <img src="garden.jpg" alt="جنينة الحروف">
+
+    <!-- كل زر بيغطي حرف واحد في الصورة. الأماكن بالنسبة المئوية من الصورة -->
+    <button class="hotspot" onclick="reveal('أ',this)" style="left:5.5%;top:11.4%;width:4.8%;height:12.5%;background:#dbb98c">؟</button>
+    <button class="hotspot" onclick="reveal('ت',this)" style="left:26.6%;top:15.6%;width:6.1%;height:10.1%;background:#dcb98c">؟</button>
+    <button class="hotspot" onclick="reveal('ج',this)" style="left:11.9%;top:46.7%;width:5.8%;height:8.6%;background:#e8c89b">؟</button>
+    <button class="hotspot" onclick="reveal('ب',this)" style="left:32.8%;top:49%;width:5.2%;height:5.8%;background:#e8c89b">؟</button>
+    <button class="hotspot" onclick="reveal('ح',this)" style="left:58.75%;top:48.6%;width:5.5%;height:6.7%;background:#eceee2">؟</button>
+    <button class="hotspot" onclick="reveal('ث',this)" style="left:90.2%;top:56.25%;width:6.5%;height:7.9%;background:#ebd0a4">؟</button>
+    <button class="hotspot" onclick="reveal('ب',this)" style="left:81.6%;top:74.7%;width:9.4%;height:9.7%;background:#e9cd9f">؟</button>
+  </div>
+
+  <div class="instructions">ابحث عن الحروف المخفية... ثم اضغط على المكان الذي تظن أن الحرف يختبئ فيه! 🔎</div>
+
+  <div id="popup" class="letter-pop"><span id="letter"></span><small>قل الحرف بصوت واضح 👏</small></div>
+  <div class="progress">وجدتَ: <span id="count">0</span> / 6 حروف</div>
+  <button class="back" onclick="showSlide(1,'back')">↩ العودة إلى البوابة</button>
+  <div id="confetti" class="confetti"></div>
+</section>
+
+</div>
+
+<script>
+const found = new Set();   // بنعدّ الحروف المختلفة (ب موجودة في مكانين لكن تتحسب مرة واحدة)
+let lastTimer;
+
+function showSlide(n, dir){
+  dir = dir || 'forward';
+  const cur = document.querySelector('.slide.active');
+  const next = document.getElementById('slide'+n);
+  if(cur === next) return;
+  cur.classList.remove('active');
+  cur.classList.add(dir === 'forward' ? 'exit-forward' : 'exit-back');
+  next.classList.remove('exit-forward','exit-back');
+  next.classList.add('active');
+  setTimeout(()=>cur.classList.remove('exit-forward','exit-back'), 1000);
+}
+function goToGarden(){ showSlide(2,'forward'); }
+
+function reveal(letter, el){
+  const popup = document.getElementById('popup');
+  const out = document.getElementById('letter');
+  const rect = el.getBoundingClientRect();
+
+  out.textContent = letter;
+  popup.style.left = Math.max(10, Math.min(window.innerWidth-130, rect.left + rect.width/2 - 50)) + 'px';
+  popup.style.top = (rect.top < 150 ? rect.bottom + 10 : rect.top - 105) + 'px';
+  el.classList.add('open');
+  popup.classList.remove('show');
+  void popup.offsetWidth;
+  popup.classList.add('show');
+
+  if(!found.has(letter)){
+    found.add(letter);
+    document.getElementById('count').textContent = found.size;
+    burst();
+  }
+  clearTimeout(lastTimer);
+  lastTimer = setTimeout(()=>popup.classList.remove('show'), 1800);
+}
+
+function burst(){
+  const box=document.getElementById('confetti');
+  box.innerHTML='';
+  for(let i=0;i<28;i++){
+    const s=document.createElement('span');
+    s.style.left=(35+Math.random()*30)+'%';
+    s.style.animationDelay=(Math.random()*.25)+'s';
+    s.style.transform=`rotate(${Math.random()*180}deg)`;
+    s.style.background=['#e0a83a','#2a7f7a','#5b4a8a','#e2775f','#5aa9d6'][Math.floor(Math.random()*5)];
+    box.appendChild(s);
+  }
+  setTimeout(()=>box.innerHTML='',1800);
+}
+</script>
+</body>
+</html>
