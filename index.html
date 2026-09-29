@@ -7,17 +7,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 :root{
-  --ink:#3a2f5e;        /* بنفسجي غامق للنصوص */
-  --teal:#2a7f7a;       /* الأخضر المزرق للأزرار */
+  --ink:#3a2f5e;
+  --teal:#2a7f7a;
   --teal-dark:#1c5a56;
-  --gold:#e0a83a;       /* الذهبي للإطارات */
+  --gold:#e0a83a;
   --cream:#fffaf0;
 }
 *{box-sizing:border-box}
 body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;overflow:hidden;color:var(--ink)}
 .lesson{width:100vw;height:100vh;position:relative;overflow:hidden}
 
-/* ===== الانتقال بين السلايدات ===== */
 .slide{
   position:absolute;inset:0;
   opacity:0;visibility:hidden;pointer-events:none;
@@ -25,7 +24,7 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
   transition:opacity .8s ease, transform .9s cubic-bezier(.22,.8,.25,1), visibility 0s linear .8s;
 }
 .slide.active{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
-.slide.exit-forward{transform:scale(1.35)}   /* زووم كأننا بندخل من البوابة */
+.slide.exit-forward{transform:scale(1.35)}
 .slide.exit-back{transform:scale(.9)}
 
 /* ===== السلايد الأول ===== */
@@ -39,13 +38,12 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
 .hill.h2{right:-12%;bottom:16%;width:65%;height:38%;background:#a2cf9a}
 .ground{position:absolute;bottom:-8%;left:-5%;width:110%;height:48%;background:linear-gradient(180deg,#8cc48a,#5f9e6b);border-radius:50% 50% 0 0}
 
-/* عنوان الترحيب: فوق البوابة وواضح */
 .title-banner{
-  position:absolute;top:13%;left:50%;transform:translateX(-50%);
+  position:absolute;top:5%;left:50%;transform:translateX(-50%);
   z-index:6;white-space:nowrap;
   background:linear-gradient(180deg,#fffdf6,#fff1d0);
   border:3px solid var(--gold);border-radius:999px;
-  padding:8px 20px;
+  padding:8px 38px;
   font-size:clamp(22px,3.2vw,46px);font-weight:800;color:var(--ink);
   box-shadow:0 10px 30px #3a2f5e30;
 }
@@ -61,7 +59,6 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
 .start-btn:hover{background:#33918b}
 .start-btn:active{transform:translateY(4px);box-shadow:0 3px 0 var(--teal-dark)}
 
-/* الاسم تحت على الشمال */
 .author{
   position:absolute;left:2.5%;bottom:3%;z-index:10;
   direction:ltr;unicode-bidi:isolate;
@@ -71,37 +68,36 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
   box-shadow:0 6px 20px #3a2f5e22;
 }
 
-/* حركات دخول السلايد الأول */
 .slide.active .title-banner{animation:dropCenter .8s .35s cubic-bezier(.22,.8,.25,1) both}
 .slide.active .bottom-box{animation:riseCenter .8s .5s cubic-bezier(.22,.8,.25,1) both}
 .slide.active .author{animation:fadeUp .8s .7s ease both}
 
-/* ===== السلايد الثاني ===== */
-.garden{background:#2b3b34}
-/* خلفية ضبابية من نفس الصورة تملا الجوانب لو الشاشة نسبتها مختلفة */
+/* ===== سلايدات الألعاب (الجنينة + البحر) ===== */
+.game-slide{background:#2b3b34}
 .bg-blur{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(24px) brightness(.85);}
-/* الصورة جوه إطار ثابت النسبة 16:9 عشان الأماكن تفضل مظبوطة على الحروف في أي شاشة */
 .stage{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh * 16 / 9));aspect-ratio:16/9;box-shadow:0 0 60px #0006}
 .stage img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
 .instructions{position:absolute;top:2.5%;left:50%;transform:translateX(-50%);background:#fffaf0f2;border:3px solid var(--gold);border-radius:22px;padding:9px 22px;font-size:clamp(14px,1.4vw,21px);font-weight:800;box-shadow:0 8px 25px #0003;z-index:20;white-space:nowrap}
-/* الغطاء: لوحة خشب صغيرة عليها علامة استفهام بتخبّي الحرف. لما الطفل يدوس تختفي ويظهر الحرف */
 .hotspot{position:absolute;border:0;padding:0;border-radius:38%;cursor:pointer;z-index:15;outline:none;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center;font-family:inherit;font-weight:800;color:#8a6a45;font-size:clamp(14px,2.6vw,36px);box-shadow:inset 0 0 8px #6b4a2a55;transition:opacity .5s ease,transform .2s ease}
 .hotspot:hover{transform:scale(1.06)}
 .hotspot.open{opacity:0}
+/* غطاء فقاعة معتم بالكامل عشان يخبي الحرف تمامًا */
+.hotspot.bubble{background:radial-gradient(circle at 35% 30%,#ffffff 0%,#d7f0f8 55%,#a9dfef 100%);border:3px solid #ffffff;color:#1c5a56;border-radius:50%;box-shadow:0 5px 16px #0005,inset 0 0 10px #ffffffcc}
 .letter-pop{position:absolute;z-index:30;display:none;min-width:100px;height:100px;padding:10px;border-radius:28px;background:#fffdf6;border:7px solid var(--gold);align-items:center;justify-content:center;font-size:68px;font-weight:900;color:var(--ink);box-shadow:0 12px 35px #0005;animation:pop .35s ease}
 .letter-pop.show{display:flex}
 .letter-pop small{position:absolute;bottom:-32px;font-size:14px;background:#fff;padding:3px 9px;border-radius:10px;white-space:nowrap;color:var(--ink)}
-.progress{position:absolute;right:2%;bottom:3%;background:#fffaf0f2;border:2px solid var(--gold);padding:9px 16px;border-radius:18px;font-weight:800;z-index:20;box-shadow:0 5px 20px #0003}
-.back{position:absolute;left:2%;bottom:3%;z-index:20;border:2px solid var(--gold);background:#fffaf0f2;color:var(--ink);font-family:inherit;font-weight:800;padding:9px 16px;border-radius:18px;cursor:pointer;transition:transform .2s}
-.back:hover{transform:translateY(-2px)}
+.progress{background:#fffaf0f2;border:2px solid var(--gold);padding:9px 16px;border-radius:18px;font-weight:800;box-shadow:0 5px 20px #0003}
+.nav-right{position:absolute;right:2%;bottom:3%;z-index:20;display:flex;align-items:center;gap:10px}
+.back,.next{border:2px solid var(--gold);background:#fffaf0f2;color:var(--ink);font-family:inherit;font-weight:800;padding:9px 16px;border-radius:18px;cursor:pointer;transition:transform .2s;box-shadow:0 5px 20px #0003}
+.back{position:absolute;left:2%;bottom:3%;z-index:20}
+.back:hover,.next:hover{transform:translateY(-2px)}
 .confetti{position:absolute;inset:0;pointer-events:none;z-index:50;overflow:hidden}
 .confetti span{position:absolute;top:-20px;width:10px;height:18px;border-radius:3px;animation:fall 1.4s linear forwards}
+.balloon{position:absolute;bottom:6%;font-size:44px;animation:floatUp 1.9s ease-in forwards}
 
-/* حركات دخول السلايد الثاني */
 .slide.active .instructions{animation:dropCenter .8s .4s cubic-bezier(.22,.8,.25,1) both}
-.slide.active .progress,.slide.active .back{animation:fadeUp .8s .7s ease both}
+.slide.active .progress,.slide.active .back,.slide.active .next{animation:fadeUp .8s .7s ease both}
 
-/* ===== الحركات ===== */
 @keyframes pop{0%{transform:scale(.2) rotate(-10deg);opacity:0}70%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
 @keyframes fall{to{top:110%;transform:rotate(720deg)}}
 @keyframes sway{50%{transform:translateY(-5px) rotate(3deg)}}
@@ -109,6 +105,7 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
 @keyframes riseCenter{from{opacity:0;transform:translate(-50%,40px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes glow{0%,100%{box-shadow:0 7px 0 var(--teal-dark),0 0 0 0 #e0a83a88}50%{box-shadow:0 7px 0 var(--teal-dark),0 0 0 14px #e0a83a00}}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-70vh) scale(1.05)}}
 
 @media(max-width:700px){
   .instructions{white-space:normal;width:80%;text-align:center}
@@ -117,6 +114,19 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
   .author{left:50%;transform:translateX(-50%);bottom:1.5%}
   .slide.active .author{animation:none}
 }
+
+/* ===== سلايد بوابة البحر ===== */
+.sea-welcome{background:linear-gradient(180deg,#bfe9f7 0%,#d9f3fa 38%,#8fd8ea 38%,#3aaed0 100%)}
+.sea-water{position:absolute;left:0;right:0;bottom:0;height:62%;background:linear-gradient(180deg,#7fd6ea 0%,#2f9fc9 60%,#1f7fae 100%)}
+.sea-wave{position:absolute;left:-5%;width:110%;height:60px;top:38%;background:#bdeaf5;border-radius:50% 50% 0 0;opacity:.7}
+.sea-sand{position:absolute;bottom:-8%;left:-5%;width:110%;height:34%;background:linear-gradient(180deg,#f6e2ae,#e6c887);border-radius:50% 50% 0 0}
+.sea-gate-arch{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:62%;height:78%;border:28px solid #ff8f7a;border-bottom:0;border-radius:240px 240px 0 0;background:#c9f1fa;box-shadow:inset 0 0 30px #ffffffaa}
+.sea-gate-door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:45%;height:67%;background:repeating-linear-gradient(90deg,#2f9fc9 0 17px,#5cc4e0 17px 27px);border:12px solid #e8705a;border-bottom:0;border-radius:140px 140px 0 0;box-shadow:inset 0 0 35px #0b4a6b}
+.sea-deco{position:absolute;font-size:48px;animation:sway 3s ease-in-out infinite;z-index:5}
+.sd1{left:11%;bottom:22%}.sd2{right:12%;bottom:23%}.sd3{left:23%;bottom:14%}.sd4{right:25%;bottom:15%}
+.sea-bub{position:absolute;font-size:34px;opacity:.85;animation:sway 4s ease-in-out infinite}
+.sb1{left:36%;top:48%}.sb2{right:34%;top:52%}.sb3{left:44%;top:40%}
+
 </style>
 </head>
 <body>
@@ -135,40 +145,90 @@ body{margin:0;background:#dfeee8;font-family:"Cairo",Tahoma,Arial,sans-serif;ove
 
   <div class="bottom-box">
     <div class="welcome-card">هل أنت مستعدّ للبحث عن الحروف؟ 🔎</div>
-    <button class="start-btn" onclick="goToGarden()">هيا ندخل الجنينة! 🌳</button>
+    <button class="start-btn" onclick="showSlide(2,'forward')">هيا ندخل الجنينة! 🌳</button>
   </div>
 
   <div class="author">Miss: Nourhan Ali</div>
 </section>
 
-<section id="slide2" class="slide garden">
+<!-- ===== سلايد 2: جنينة الحروف ===== -->
+<section id="slide2" class="slide game-slide">
   <img class="bg-blur" src="garden.jpg" alt="">
   <div class="stage">
     <img src="garden.jpg" alt="جنينة الحروف">
-
-    <!-- كل زر بيغطي حرف واحد في الصورة. الأماكن بالنسبة المئوية من الصورة -->
-    <button class="hotspot" onclick="reveal('أ',this)" style="left:5.5%;top:11.4%;width:4.8%;height:12.5%;background:#dbb98c">؟</button>
-    <button class="hotspot" onclick="reveal('ت',this)" style="left:26.6%;top:15.6%;width:6.1%;height:10.1%;background:#dcb98c">؟</button>
-    <button class="hotspot" onclick="reveal('ج',this)" style="left:11.9%;top:46.7%;width:5.8%;height:8.6%;background:#e8c89b">؟</button>
-    <button class="hotspot" onclick="reveal('ب',this)" style="left:32.8%;top:49%;width:5.2%;height:5.8%;background:#e8c89b">؟</button>
-    <button class="hotspot" onclick="reveal('ح',this)" style="left:58.75%;top:48.6%;width:5.5%;height:6.7%;background:#eceee2">؟</button>
-    <button class="hotspot" onclick="reveal('ث',this)" style="left:90.2%;top:56.25%;width:6.5%;height:7.9%;background:#ebd0a4">؟</button>
-    <button class="hotspot" onclick="reveal('ب',this)" style="left:81.6%;top:74.7%;width:9.4%;height:9.7%;background:#e9cd9f">؟</button>
+    <button class="hotspot" data-id="g1" onclick="reveal('أ',this)" style="left:5.5%;top:11.4%;width:4.8%;height:12.5%;background:#dbb98c">؟</button>
+    <button class="hotspot" data-id="g2" onclick="reveal('ت',this)" style="left:26.6%;top:15.6%;width:6.1%;height:10.1%;background:#dcb98c">؟</button>
+    <button class="hotspot" data-id="g3" onclick="reveal('ج',this)" style="left:11.9%;top:46.7%;width:5.8%;height:8.6%;background:#e8c89b">؟</button>
+    <button class="hotspot" data-id="g4" onclick="reveal('ب',this)" style="left:32.8%;top:49%;width:5.2%;height:5.8%;background:#e8c89b">؟</button>
+    <button class="hotspot" data-id="g5" onclick="reveal('ح',this)" style="left:58.75%;top:48.6%;width:5.5%;height:6.7%;background:#eceee2">؟</button>
+    <button class="hotspot" data-id="g6" onclick="reveal('ث',this)" style="left:90.2%;top:56.25%;width:6.5%;height:7.9%;background:#ebd0a4">؟</button>
+    <button class="hotspot" data-id="g7" onclick="reveal('ب',this)" style="left:81.6%;top:74.7%;width:9.4%;height:9.7%;background:#e9cd9f">؟</button>
   </div>
 
   <div class="instructions">ابحث عن الحروف المخفية... ثم اضغط على المكان الذي تظن أن الحرف يختبئ فيه! 🔎</div>
 
-  <div id="popup" class="letter-pop"><span id="letter"></span><small>قل الحرف بصوت واضح 👏</small></div>
-  <div class="progress">وجدتَ: <span id="count">0</span> / 6 حروف</div>
+  <div id="popup2" class="letter-pop"><span class="letter"></span><small>قل الحرف بصوت واضح 👏</small></div>
+  <div class="nav-right">
+    <div class="progress">وجدتَ: <span id="count2">0</span> / 7 حروف</div>
+    <button class="next" onclick="showSlide('seagate','forward')">التالي ⟵</button>
+  </div>
   <button class="back" onclick="showSlide(1,'back')">↩ العودة إلى البوابة</button>
-  <div id="confetti" class="confetti"></div>
+  <div id="confetti2" class="confetti"></div>
+</section>
+
+
+
+<!-- ===== سلايد: بوابة البحر ===== -->
+<section id="slideseagate" class="slide sea-welcome">
+  <div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div>
+  <div class="sea-water"></div><div class="sea-wave"></div><div class="sea-sand"></div>
+
+  <div class="title-banner">مرحبًا بك في بحر الحروف 🌊</div>
+
+  <div class="gate">
+    <div class="sea-gate-arch"></div><div class="sea-gate-door"></div>
+  </div>
+  <div class="sea-bub sb1">🫧</div><div class="sea-bub sb2">🫧</div><div class="sea-bub sb3">🫧</div>
+  <div class="sea-deco sd1">🐚</div><div class="sea-deco sd2">🦀</div><div class="sea-deco sd3">⭐</div><div class="sea-deco sd4">🐙</div>
+
+  <div class="bottom-box">
+    <div class="welcome-card">هل أنت مستعدّ للغوص والبحث عن الحروف؟ 🐠</div>
+    <button class="start-btn" onclick="showSlide(3,'forward')">هيا نغوص في البحر! 🤿</button>
+  </div>
+
+  <button class="back" onclick="showSlide(2,'back')">↩ العودة إلى الجنينة</button>
+  <div class="author">Miss: Nourhan Ali</div>
+</section>
+
+<!-- ===== سلايد 3: أسماك البحر ===== -->
+<section id="slide3" class="slide game-slide">
+  <img class="bg-blur" src="sea.jpg" alt="">
+  <div class="stage">
+    <img src="sea.jpg" alt="أسماك البحر">
+    <button class="hotspot bubble" data-id="s1" onclick="reveal('ث',this)" style="left:8.8%;top:29.75%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s2" onclick="reveal('ب',this)" style="left:33.7%;top:26.75%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s3" onclick="reveal('ح',this)" style="left:66.7%;top:20.25%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s4" onclick="reveal('ت',this)" style="left:22.0%;top:48.75%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s5" onclick="reveal('ج',this)" style="left:55.4%;top:44.25%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s6" onclick="reveal('خ',this)" style="left:70.4%;top:59.75%;width:6.4%;height:11.5%">؟</button>
+    <button class="hotspot bubble" data-id="s7" onclick="reveal('أ',this)" style="left:39.2%;top:64.25%;width:6.4%;height:11.5%">؟</button>
+  </div>
+
+  <div class="instructions">الأسماك بتخبّي الحروف... دوس على الفقاعة تحت كل سمكة عشان تشوفها! 🐠</div>
+
+  <div id="popup3" class="letter-pop"><span class="letter"></span><small>قل الحرف بصوت واضح 👏</small></div>
+  <div class="nav-right">
+    <div class="progress">وجدتَ: <span id="count3">0</span> / 7 حروف</div>
+  </div>
+  <button class="back" onclick="showSlide('seagate','back')">↩ العودة إلى بوابة البحر</button>
+  <div id="confetti3" class="confetti"></div>
 </section>
 
 </div>
 
 <script>
-const found = new Set();   // بنعدّ الحروف المختلفة (ب موجودة في مكانين لكن تتحسب مرة واحدة)
-let lastTimer;
+const foundSets = {2:new Set(), 3:new Set()};
+const lastTimers = {2:null, 3:null};
 
 function showSlide(n, dir){
   dir = dir || 'forward';
@@ -181,11 +241,12 @@ function showSlide(n, dir){
   next.classList.add('active');
   setTimeout(()=>cur.classList.remove('exit-forward','exit-back'), 1000);
 }
-function goToGarden(){ showSlide(2,'forward'); }
 
 function reveal(letter, el){
-  const popup = document.getElementById('popup');
-  const out = document.getElementById('letter');
+  const slideEl = el.closest('.slide');
+  const n = slideEl.id.replace('slide','');
+  const popup = document.getElementById('popup'+n);
+  const out = popup.querySelector('.letter');
   const rect = el.getBoundingClientRect();
 
   out.textContent = letter;
@@ -196,27 +257,49 @@ function reveal(letter, el){
   void popup.offsetWidth;
   popup.classList.add('show');
 
-  if(!found.has(letter)){
-    found.add(letter);
-    document.getElementById('count').textContent = found.size;
-    burst();
+  // كل مكان (id) بيتحسب مرة واحدة في العداد، حتى لو الحرف مكرر في مكان تاني
+  const set = foundSets[n];
+  const id = el.dataset.id;
+  if(!set.has(id)){
+    set.add(id);
+    document.getElementById('count'+n).textContent = set.size;
   }
-  clearTimeout(lastTimer);
-  lastTimer = setTimeout(()=>popup.classList.remove('show'), 1800);
+
+  // الاحتفال (كونفيتي + بالونات) بيحصل في كل ضغطة
+  burst(n);
+  balloons(n, rect);
+
+  clearTimeout(lastTimers[n]);
+  lastTimers[n] = setTimeout(()=>popup.classList.remove('show'), 1800);
 }
 
-function burst(){
-  const box=document.getElementById('confetti');
-  box.innerHTML='';
-  for(let i=0;i<28;i++){
+function burst(n){
+  const box=document.getElementById('confetti'+n);
+  for(let i=0;i<26;i++){
     const s=document.createElement('span');
     s.style.left=(35+Math.random()*30)+'%';
     s.style.animationDelay=(Math.random()*.25)+'s';
     s.style.transform=`rotate(${Math.random()*180}deg)`;
     s.style.background=['#e0a83a','#2a7f7a','#5b4a8a','#e2775f','#5aa9d6'][Math.floor(Math.random()*5)];
     box.appendChild(s);
+    setTimeout(()=>s.remove(),1700);
   }
-  setTimeout(()=>box.innerHTML='',1800);
+}
+
+function balloons(n, rect){
+  const box=document.getElementById('confetti'+n);
+  const emojis=['🎈','🎉','⭐','✨'];
+  const startLeftPct = (rect.left + rect.width/2) / window.innerWidth * 100;
+  for(let i=0;i<5;i++){
+    const b=document.createElement('div');
+    b.className='balloon';
+    b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    b.style.left=Math.max(2,Math.min(96,startLeftPct + (Math.random()*16-8)))+'%';
+    b.style.bottom=(100 - (rect.top/window.innerHeight*100) - 6)+'%';
+    b.style.animationDelay=(Math.random()*.3)+'s';
+    box.appendChild(b);
+    setTimeout(()=>b.remove(),2300);
+  }
 }
 </script>
 </body>
